@@ -1,0 +1,12 @@
+<properties>
+
+    <property id="BackgroundColor" type="number">0x000000</property>
+    <property id="ForegroundColor" type="number">0xFF0000</property>
+    <property id="Battery1" type="number">0xFF0000</property>
+    <property id="Battery2" type="number">0xFFA500</property>
+    <property id="Battery3" type="number">0x9FBA45</property>
+    <property id="Battery4" type="number">0x0CF3B8</property>
+    <property id="Battery5" type="number">0x00FF00</property>
+    <property id="UseMilitaryFormat" type="boolean">false</property>
+
+</properties>

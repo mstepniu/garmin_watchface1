@@ -1,0 +1,14 @@
+<layout id="WatchFace">
+    <drawable class="Background" />
+    <label id="TimeLabel" x="183" y="60" font="Graphics.FONT_SYSTEM_NUMBER_HOT" justification="Graphics.TEXT_JUSTIFY_RIGHT" />
+    <label id="seconds" x="195" y="75" font="Graphics.FONT_SYSTEM_TINY" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="ampm" x="195" y="95" font="Graphics.FONT_SYSTEM_TINY" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="SystemStats" x="122" y="188" font="Graphics.FONT_XTINY" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
+    <label id="heartrate" x="60" y="170" color="#FFC0CB" font="Graphics.FONT_SYSTEM_SMALL" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
+    <label id="dayofweek" x="115" y="20" font="Graphics.FONT_TINY" justification="Graphics.TEXT_JUSTIFY_RIGHT"/>
+    <label id="date" x="130" y="20" font="Graphics.FONT_TINY" justification="Graphics.TEXT_JUSTIFY_LEFT"/>
+    <label id="weather" x="190" y="170" font="Graphics.FONT_SYSTEM_SMALL" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
+    <label id="StepCountDisplay" text="00000" x="center" y="150" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_CENTER" color="Gfx.COLOR_WHITE" />
+    <label id="vomax" x="center" y="60" font="Graphics.FONT_TINY" justification="Graphics.TEXT_JUSTIFY_RIGHT"/>
+</layout>
+

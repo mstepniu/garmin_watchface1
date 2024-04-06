@@ -1,0 +1,22 @@
+<drawables>
+    <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+    <bitmap id="dbattery" filename="battery.png" scaleX="20" scaleY="20"/>
+    <bitmap id="battery1" filename="Battery\battery1.png" scaleX="30" scaleY="30"/>
+    <bitmap id="battery2" filename="Battery\battery2.png" scaleX="30" scaleY="30"/>
+    <bitmap id="battery3" filename="Battery\battery3.png" scaleX="30" scaleY="30"/>
+    <bitmap id="battery4" filename="Battery\battery4.png" scaleX="30" scaleY="30"/>
+    <bitmap id="battery5" filename="Battery\battery5.png" scaleX="30" scaleY="30"/>
+    <bitmap id="heart" filename="heart.png" scaleX="25" scaleY="25" />
+    <bitmap id="clouds" filename="Weather\clouds.png" />
+    <bitmap id="fog" filename="Weather\fog.png" />
+    <bitmap id="hail" filename="Weather\hail.png" />
+    <bitmap id="rain" filename="Weather\rain.png" />
+    <bitmap id="snow" filename="Weather\snow.png" />
+    <bitmap id="squall" filename="Weather\squall.png" />
+    <bitmap id="sun" filename="Weather\sun.png" scaleX="40" scaleY="40"/>
+    <bitmap id="thunderstorm" filename="Weather\thunderstorm.png" />
+    <bitmap id="tornado" filename="Weather\tornado.png" />
+    <bitmap id="wintermix" filename="Weather\wintermix.png" />
+    <bitmap id="alarm" filename="alarm.png" />
+
+</drawables>
