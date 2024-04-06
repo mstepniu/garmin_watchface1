@@ -156,6 +156,9 @@ class marksface2View extends WatchUi.WatchFace {
                 hours = hours - 12;
                 ampm = "pm";
             }
+            else if (hours == 0) {
+                hours = 12;
+            }
         } else {
             if (Application.Properties.getValue("UseMilitaryFormat")) {
                 timeFormat = "$1$$2$";
