@@ -20,8 +20,8 @@ class marksface2View extends WatchUi.WatchFace {
     var time_offset;
     var bmpAlarm;
 
-    var day_dict = {"Sat" => Graphics.COLOR_RED,
-                    "Sun" => Graphics.COLOR_RED };
+    var day_dict = {"Sat" => Graphics.COLOR_LT_GRAY,
+                    "Sun" => Graphics.COLOR_LT_GRAY };
 
     function initialize() {
         WatchFace.initialize();
@@ -44,7 +44,7 @@ class marksface2View extends WatchUi.WatchFace {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() as Void {
-
+        setCurrentTime();
     }
 
     // Update the view
@@ -82,6 +82,7 @@ class marksface2View extends WatchUi.WatchFace {
 
     // The user has just looked at their watch. Timers and animations may be started here.
     function onExitSleep() as Void {
+        setCurrentTime();
     }
 
     // Terminate any active timers and prepare for slow updates.
@@ -117,7 +118,7 @@ class marksface2View extends WatchUi.WatchFace {
 
         if (day_dict.hasKey(dayname.day_of_week.toString()))
         {
-            day_of_week.setColor(Graphics.COLOR_RED);
+            day_of_week.setColor(Graphics.COLOR_ORANGE);
         }
         else
         {
@@ -259,27 +260,60 @@ class marksface2View extends WatchUi.WatchFace {
 
     // sets the Temperature, converts to fahrenheit
     private function setWeather() {
-        var degrees = Weather.getCurrentConditions().temperature;
         var vdegrees = View.findDrawableById("weather") as Text;
-        degrees = (degrees * (9/5) + 32);
-        if (degrees < 60) {
-            vdegrees.setColor(Graphics.COLOR_BLUE);
+        var Current_Conditions = Weather.getCurrentConditions();
+
+        if (Current_Conditions == null) {
+            vdegrees.setText("N\\A");
+            return;
         }
-        else if (degrees >= 60 and degrees < 90) {
-            vdegrees.setColor(Graphics.COLOR_YELLOW);
+        var degrees = Weather.getCurrentConditions().feelsLikeTemperature;
+        
+        
+        if (degrees == null) {
+            vdegrees.setText("N\\A");
         }
         else {
-            vdegrees.setColor(Graphics.COLOR_RED);
+            
+            degrees = (degrees * 1.8 + 32.0);
+            if (degrees < 60) {
+                vdegrees.setColor(Graphics.COLOR_BLUE);
+            }
+            else if (degrees >= 60 and degrees < 90) {
+                vdegrees.setColor(Graphics.COLOR_YELLOW);
+            }
+            else {
+                vdegrees.setColor(Graphics.COLOR_RED);
+            }
+            
+            vdegrees.setText(degrees.format("%d").toString() + "°");
         }
         
-        vdegrees.setText(degrees.format("%d").toString() + "°");
+
+
+        // testing weather stuff 
+
+        // var weather_location = Weather.getCurrentConditions().observationLocationName;
+        // var vomax_label = View.findDrawableById("vomax") as Text;
+        // if (weather_location == null) {
+        //     weather_location = "huh?";
+        // }
+        // vomax_label.setText(weather_location.toString());
+
     }
 
     // sets the picture for the forecast.  The full list of conditions are here:
     // https://developer.garmin.com/connect-iq/api-docs/Toybox/Weather.html
     private function setForecast() {
+        var Current_Conditions = Weather.getCurrentConditions();
+        if (Current_Conditions == null) {
+            bmpForecast = WatchUi.loadResource(Rez.Drawables.sun);
+            forecast_offset = 0;
+            return;
+        }
         var forecast = Weather.getCurrentConditions().condition;
         forecast_offset = 5;
+        
         if (forecast == 10) {
             bmpForecast = WatchUi.loadResource(Rez.Drawables.hail);
         }
