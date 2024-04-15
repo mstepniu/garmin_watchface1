@@ -19,6 +19,7 @@ class marksface2View extends WatchUi.WatchFace {
     var forecast_offset;
     var time_offset;
     var bmpAlarm;
+    var modifier;
 
     var day_dict = {"Sat" => Graphics.COLOR_LT_GRAY,
                     "Sun" => Graphics.COLOR_LT_GRAY };
@@ -33,10 +34,12 @@ class marksface2View extends WatchUi.WatchFace {
         bmpHeart = WatchUi.loadResource(Rez.Drawables.heart);
         bmpAlarm = WatchUi.loadResource(Rez.Drawables.alarm);
         
+        
     }
 
     // Load your resources here
     function onLayout(dc as Dc) as Void {
+        modifier = dc.getWidth() / 240;
         setLayout(Rez.Layouts.WatchFace(dc));
     }
 
@@ -49,7 +52,10 @@ class marksface2View extends WatchUi.WatchFace {
 
     // Update the view
     function onUpdate(dc as Dc) as Void {
-        
+        System.println("Width: " + dc.getWidth().toString() + " Height: " + dc.getHeight().toString());
+        modifier = dc.getHeight() / 240.0;
+        System.println(modifier);
+
         setCurrentDate();
         setWeather();
         setForecast();
@@ -62,14 +68,14 @@ class marksface2View extends WatchUi.WatchFace {
         View.onUpdate(dc);
 
         // Place the battery, heart, and forecast bitmaps on top of the layout (after update)
-        dc.drawBitmap(dc.getWidth()/2-13, 203, myBmp);
-        dc.drawBitmap(dc.getWidth()/4-12, 147, bmpHeart);
-        dc.drawBitmap(dc.getWidth()*3/4-12+forecast_offset, 140, bmpForecast);
+        dc.drawBitmap(dc.getWidth()/2-13, 203 * modifier, myBmp);
+        dc.drawBitmap(dc.getWidth()/4-12, 147 * modifier, bmpHeart);
+        dc.drawBitmap(dc.getWidth()*3/4-12+forecast_offset, 140 * modifier, bmpForecast);
         var mySettings = System.getDeviceSettings();
 
         // if there are alarms, then draw the alarm icon above the 'seconds' timer.
         if (mySettings.alarmCount > 0) {
-            dc.drawBitmap(195, 55, bmpAlarm);
+            dc.drawBitmap(195 * modifier, 55 * modifier, bmpAlarm);
         }
         
     }
@@ -182,19 +188,19 @@ class marksface2View extends WatchUi.WatchFace {
         else {
             time_offset = 0;
         }
-        view.setLocation(183-time_offset, 60);
+        view.setLocation((183 * modifier)-time_offset, 60 * modifier);
                
 
         // Update the Seconds View
         var vseconds = View.findDrawableById("seconds") as Text;
 
         vseconds.setText(seconds.toString());
-        vseconds.setLocation(195-time_offset, 75);
+        vseconds.setLocation((195 * modifier)-time_offset, 75 * modifier);
 
         // Update the AM/PM View
         var vampm = View.findDrawableById("ampm") as Text;
         vampm.setText(ampm);
-        vampm.setLocation(195-time_offset, 95);
+        vampm.setLocation((195 * modifier)-time_offset, 95 * modifier);
 
     }
 
