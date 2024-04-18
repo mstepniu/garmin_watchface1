@@ -52,9 +52,7 @@ class marksface2View extends WatchUi.WatchFace {
 
     // Update the view
     function onUpdate(dc as Dc) as Void {
-        System.println("Width: " + dc.getWidth().toString() + " Height: " + dc.getHeight().toString());
         modifier = dc.getHeight() / 240.0;
-        System.println(modifier);
 
         setCurrentDate();
         setWeather();
