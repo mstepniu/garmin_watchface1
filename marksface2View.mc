@@ -13,7 +13,7 @@ import Toybox.Weather;
 
 class marksface2View extends WatchUi.WatchFace {
     var myBmp, batt1, batt2, batt3, batt4, batt5;
-
+    var base_width;
     var bmpHeart;
     var bmpForecast;
     var forecast_offset;
@@ -33,12 +33,14 @@ class marksface2View extends WatchUi.WatchFace {
         batt5 = WatchUi.loadResource(Rez.Drawables.battery5);
         bmpHeart = WatchUi.loadResource(Rez.Drawables.heart);
         bmpAlarm = WatchUi.loadResource(Rez.Drawables.alarm);
+        base_width = 0;
         
         
     }
 
     // Load your resources here
     function onLayout(dc as Dc) as Void {
+        base_width = dc.getWidth();
         modifier = dc.getWidth() / 240;
         setLayout(Rez.Layouts.WatchFace(dc));
     }
@@ -55,8 +57,15 @@ class marksface2View extends WatchUi.WatchFace {
         modifier = dc.getHeight() / 240.0;
 
         setCurrentDate();
-        setWeather();
-        setForecast();
+        if (Toybox has :Weather) {
+            setWeather();
+            setForecast();
+        }
+        else {
+            bmpForecast = WatchUi.loadResource(Rez.Drawables.sun);
+            forecast_offset = 0;
+        }
+        
         setStepCountDisplay();
         setCurrentTime();
         setCurrentBatteryLevel();
@@ -67,8 +76,8 @@ class marksface2View extends WatchUi.WatchFace {
 
         // Place the battery, heart, and forecast bitmaps on top of the layout (after update)
         dc.drawBitmap(dc.getWidth()/2-13, 203 * modifier, myBmp);
-        dc.drawBitmap(dc.getWidth()/4-12, 147 * modifier, bmpHeart);
-        dc.drawBitmap(dc.getWidth()*3/4-12+forecast_offset, 140 * modifier, bmpForecast);
+        dc.drawBitmap(dc.getWidth()/4-12, 147 * modifier - 3, bmpHeart);
+        dc.drawBitmap(dc.getWidth()*3/4-12+forecast_offset, 140 * modifier - 3, bmpForecast);
         var mySettings = System.getDeviceSettings();
 
         // if there are alarms, then draw the alarm icon above the 'seconds' timer.
@@ -177,6 +186,9 @@ class marksface2View extends WatchUi.WatchFace {
         // Update the Clock view
         var view = View.findDrawableById("TimeLabel") as Text;        
         view.setColor(Graphics.COLOR_WHITE as Number);
+        if (base_width < 240) {
+            view.setFont(Graphics.FONT_SYSTEM_NUMBER_MEDIUM);
+        }
         view.setText(timeString);
 
         // Change location offset of the time to depending on how long it is.  11:11 vs 1:11 to keep it centered
@@ -258,7 +270,9 @@ class marksface2View extends WatchUi.WatchFace {
         }
 
         var lblHeart = View.findDrawableById("heartrate") as Text;
-
+        if (base_width < 240) {
+            lblHeart.setFont(Graphics.FONT_SYSTEM_TINY);
+        }
         lblHeart.setText(HRT.toString());
     }
 
@@ -272,7 +286,10 @@ class marksface2View extends WatchUi.WatchFace {
             return;
         }
         var degrees = Weather.getCurrentConditions().feelsLikeTemperature;
-        
+        if (base_width < 210) {
+            System.println("TEST");
+            vdegrees.setFont(Graphics.FONT_SYSTEM_TINY);
+        }
         
         if (degrees == null) {
             vdegrees.setText("N\\A");
