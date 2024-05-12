@@ -33,7 +33,7 @@ class marksface2View extends WatchUi.WatchFace {
         batt5 = WatchUi.loadResource(Rez.Drawables.battery5);
         bmpHeart = WatchUi.loadResource(Rez.Drawables.heart);
         bmpAlarm = WatchUi.loadResource(Rez.Drawables.alarm);
-        base_width = 0;
+        base_width = 240;
         
         
     }
@@ -111,14 +111,27 @@ class marksface2View extends WatchUi.WatchFace {
     // sets the day of the week and month/day at the top
     private function setCurrentDate() {
         var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+        var today_format;
+        if (Application.Properties.getValue("Region") == 1){
+            today_format = Lang.format(
+                "$1$/$2$",
+                [
+                    today.month,
+                    today.day,
+                ]
+            );
+        }
+        else {
+            today_format = Lang.format(
+                "$1$/$2$",
+                [
+                    today.day,
+                    today.month,
+                    
+                ]
+            );
+        }
 
-        var today_format = Lang.format(
-            "$1$/$2$",
-            [
-                today.month,
-                today.day,
-            ]
-        );
 
         var date_label = View.findDrawableById("date") as Text;
         date_label.setText(today_format);
@@ -165,6 +178,7 @@ class marksface2View extends WatchUi.WatchFace {
         var hours = clockTime.hour;
         var seconds = clockTime.sec.format("%02d");
         var ampm = "am";
+        
         if (!System.getDeviceSettings().is24Hour) {
             if (hours > 12) {
                 hours = hours - 12;
@@ -173,11 +187,11 @@ class marksface2View extends WatchUi.WatchFace {
             else if (hours == 0) {
                 hours = 12;
             }
-        } else {
-            if (Application.Properties.getValue("UseMilitaryFormat")) {
-                timeFormat = "$1$$2$";
+        } 
+        else {
+                //timeFormat = "$1$:$2$";
                 hours = hours.format("%02d");
-            }
+                ampm = "";
         }
 
         var timeString = Lang.format(timeFormat, [hours, clockTime.min.format("%02d")]);
@@ -287,7 +301,6 @@ class marksface2View extends WatchUi.WatchFace {
         }
         var degrees = Weather.getCurrentConditions().feelsLikeTemperature;
         if (base_width < 210) {
-            System.println("TEST");
             vdegrees.setFont(Graphics.FONT_SYSTEM_TINY);
         }
         
@@ -295,18 +308,33 @@ class marksface2View extends WatchUi.WatchFace {
             vdegrees.setText("N\\A");
         }
         else {
-            
-            degrees = (degrees * 1.8 + 32.0);
-            if (degrees < 60) {
-                vdegrees.setColor(Graphics.COLOR_BLUE);
-            }
-            else if (degrees >= 60 and degrees < 90) {
-                vdegrees.setColor(Graphics.COLOR_YELLOW);
+            if (Application.Properties.getValue("Temperature") == 1){
+                degrees = (degrees * 1.8 + 32.0);
+                if (degrees < 60) {
+                    vdegrees.setColor(Graphics.COLOR_BLUE);
+                }
+                else if (degrees >= 60 and degrees < 90) {
+                    vdegrees.setColor(Graphics.COLOR_YELLOW);
+                }
+                else {
+                    vdegrees.setColor(Graphics.COLOR_RED);
+                }
+                
             }
             else {
-                vdegrees.setColor(Graphics.COLOR_RED);
+                if (degrees < 15) {
+                    vdegrees.setColor(Graphics.COLOR_BLUE);
+                }
+                else if (degrees >= 15 and degrees < 32) {
+                    vdegrees.setColor(Graphics.COLOR_YELLOW);
+                }
+                else {
+                    vdegrees.setColor(Graphics.COLOR_RED);
+                }
             }
-            
+            // if (base_width > 350) {
+            //     vdegrees.setFont(Graphics.FONT_SYSTEM_MEDIUM);
+            // }
             vdegrees.setText(degrees.format("%d").toString() + "°");
         }
         
