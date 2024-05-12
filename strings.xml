@@ -5,8 +5,8 @@
     <string id="BackgroundColorTitle">Background Color</string>
     <string id="ForegroundColorTitle">Foreground Color</string>
     <string id="RegionTitle">Date Format</string>
-    <string id="Date1">MM|DD</string>
-    <string id="Date2">DD|MM</string>
+    <string id="Date1">Month/Day</string>
+    <string id="Date2">Day/Month</string>
     <string id="TemperatureTitle">Temperature Format</string>
     <string id="Temperature1">Fahrenheit</string>
     <string id="Temperature2">Celsius</string>

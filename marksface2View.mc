@@ -132,8 +132,8 @@ class marksface2View extends WatchUi.WatchFace {
             );
         }
 
-
         var date_label = View.findDrawableById("date") as Text;
+        date_label.setColor(Application.Properties.getValue("ForegroundColor"));
         date_label.setText(today_format);
 
         var dayname = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
@@ -162,7 +162,7 @@ class marksface2View extends WatchUi.WatchFace {
             stepCountDisplay.setColor(Graphics.COLOR_GREEN);
         }
         else {
-            stepCountDisplay.setColor(Graphics.COLOR_WHITE);
+            stepCountDisplay.setColor(Application.Properties.getValue("ForegroundColor"));
         }
 	    stepCountDisplay.setText(stepCount.toString());
 
@@ -199,7 +199,7 @@ class marksface2View extends WatchUi.WatchFace {
 
         // Update the Clock view
         var view = View.findDrawableById("TimeLabel") as Text;        
-        view.setColor(Graphics.COLOR_WHITE as Number);
+        view.setColor(Application.Properties.getValue("ForegroundColor"));
         if (base_width < 240) {
             view.setFont(Graphics.FONT_SYSTEM_NUMBER_MEDIUM);
         }
@@ -219,10 +219,12 @@ class marksface2View extends WatchUi.WatchFace {
         var vseconds = View.findDrawableById("seconds") as Text;
 
         vseconds.setText(seconds.toString());
+        vseconds.setColor(Application.Properties.getValue("ForegroundColor"));
         vseconds.setLocation((195 * modifier)-time_offset, 75 * modifier);
 
         // Update the AM/PM View
         var vampm = View.findDrawableById("ampm") as Text;
+        vampm.setColor(Application.Properties.getValue("ForegroundColor"));
         vampm.setText(ampm);
         vampm.setLocation((195 * modifier)-time_offset, 95 * modifier);
 

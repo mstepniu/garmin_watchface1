@@ -1,6 +1,6 @@
 <properties>
     <property id="BackgroundColor" type="number">0x000000</property>
-    <property id="ForegroundColor" type="number">0xFF0000</property>
+    <property id="ForegroundColor" type="number">0xFFFFFF</property>
     <property id="Region" type="number">1</property>
     <property id="Temperature" type="number">1</property>
     <property id="Battery1" type="number">0xFF0000</property>
